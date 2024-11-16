@@ -17,7 +17,7 @@ const upload  = multer({storage:storage})
 
 saleRouter.post("/add",upload.single("image"), addSale)
 
-
+//
 
 
 
