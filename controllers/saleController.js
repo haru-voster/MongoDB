@@ -1,3 +1,4 @@
+import { error} from "console";
 import saleModel from "../models/saleModel.js";
 import fs from 'fs'
 
@@ -22,4 +23,16 @@ const addSale = async (req, res) =>{
     }
 }
 
-export {addSale}
+//all sale list
+const listSale = async(req,res)=>{
+    try {
+        const sales = await saleModel.find({});
+        res.json({success:true, data:sales})
+    } catch (error) {
+        console.log(error);
+        res.json({success:false, message:"Error"})
+
+    }
+}
+
+export {addSale, listSale}

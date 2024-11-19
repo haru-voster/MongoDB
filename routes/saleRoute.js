@@ -1,5 +1,5 @@
 import  express from 'express'
-import { addSale } from '../controllers/saleController.js'
+import { addSale, listSale } from '../controllers/saleController.js'
 import multer from "multer"
 
 const saleRouter = express.Router();
@@ -16,7 +16,7 @@ const upload  = multer({storage:storage})
 
 
 saleRouter.post("/add",upload.single("image"), addSale)
-
+saleRouter.get("/list", listSale)
 //
 
 

@@ -7,15 +7,17 @@ import saleRouter from "./routes/saleRoute.js";
 const app = express()
 const port = process.env.PORT || 4000;
 
-
+//exceeding limit
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 //middleware
-app.use(express.json())
+app.use(express.json({ limit: '50mb' }))
 app.use(cors())
 //db connection
 connectDB();
 
 //API ENDS POINT
 app.use("/api/sale", saleRouter)
+app.use('/images', express.static('uploads'))
 
 app.get("/",(req,res)=>{
     res.send("API working")
