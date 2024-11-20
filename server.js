@@ -17,7 +17,7 @@ connectDB();
 
 //API ENDS POINT
 app.use("/api/sale", saleRouter)
-app.use('/images', express.static('uploads'))
+app.use('/image', express.static('uploads'))
 
 app.get("/",(req,res)=>{
     res.send("API working")

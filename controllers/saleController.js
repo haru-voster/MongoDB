@@ -34,5 +34,20 @@ const listSale = async(req,res)=>{
 
     }
 }
+//remove food item
+const removeSale = async (req,res)=>{
+    try{
+        const sale = await saleModel.findById(req.body.id);
+        fs.unlink(`uploads/${sale.image}`,()=>{})
 
-export {addSale, listSale}
+        await saleModel.findByIdAndDelete(req.body.id);
+        res.json({success:true, message:'sale removed'})
+        
+    }catch (error){
+        console.log(error);
+        res.join({success:false, message:'Error'})  
+
+    }
+}
+
+export {addSale, listSale, removeSale}
