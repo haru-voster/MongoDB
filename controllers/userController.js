@@ -1,6 +1,5 @@
 import userModel from "../models/userModel.js"
-
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken"  
 import bcrypt from "bcrypt"
 import validator from "validator"
 import { sign } from "crypto"
@@ -28,37 +27,37 @@ const loginUser = async(req, res)=>{
     }
 }
 const createToken = (id)=>{
-    return jwt,sign({id}, process.env.JWT_SECRET)
+    return jwt.sign({id}, process.env.JWT_SECRET)
 }
 //register new user
 const registerUser = async (req,res)=>{
 
 const {name, password, email} = req.body;
     
-    try{
+    try{//checking user already exists
 
         const exists = await userModel.findOne({email});
         if (exists){
             return res.json({success:false, message:"user already exists"})
 
         }
-                 //validate email here
+                 //validate email here & password
         if(!validator.isEmail(email)){
             return res.json({success:false, message:"Please enter a valid email"})
 
         }
         if(password.length<8){
-            return res.json({success:false, message:"Please entera strong password"})
+            return res.json({success:false, message:"Please enter strong password"})
 
         }
             //hashing user password or encrypting
         const salt = await bcrypt.genSalt(10) 
-        const hashPassword =  await bcrypt.hash(password, salt); 
+        const hashedPassword =  await bcrypt.hash(password, salt); 
         
         const newUser = new userModel({
             name:name,
             email:email,
-            password:hashPassword
+            password:hashedPassword
         })
 
         const user = await newUser.save()
